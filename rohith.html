@@ -13,24 +13,7 @@
      ============================================================ -->
 <script>
   window.ZODHYA_CONFIG = {
-    BOOKING_URL: "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-                 "&text=" + encodeURIComponent("Intro: ↔ Rohith Pallerla (Zodhya)") +
-                 "&details=" + encodeURIComponent(
-                    "15-min intro requested via event QR code.\n\n" +
-                    "Rohith Pallerla — Founder & CEO, Zodhya\n" +
-                    "AI for HVAC & building energy optimization.\n" +
-                    "LinkedIn: https://www.linkedin.com/in/rohith-pallerla-13477b98/\n" +
-                    "Company: https://www.linkedin.com/company/zodhya/"
-                 ) +
-                 "&add=" + encodeURIComponent("rohith@zodhya.com") +
-                 "&dates=" + (() => {
-                    // Default to "tomorrow 10:00–10:15 in your timezone".
-                    // The visitor can drag/edit before saving.
-                    const d = new Date(); d.setDate(d.getDate()+1); d.setHours(10,0,0,0);
-                    const fmt = x => x.toISOString().replace(/[-:]|\.\d{3}/g,'');
-                    const e = new Date(d.getTime()+15*60000);
-                    return fmt(d) + "/" + fmt(e);
-                 })(),
+    BOOKING_URL: "https://cal.com/rohithsz/30min",
     SHEETS_URL: ""  // ← paste the Apps Script /exec URL here once deployed.
   };
 </script>
@@ -176,12 +159,12 @@
 
   <!-- PRIMARY CTA: Book a meeting -->
   <div class="section">
-    <button type="button" class="cta" id="bookBtn">
+    <a class="cta" id="bookBtn" href="https://cal.com/rohithsz/30min" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M8 2v4M16 2v4M3 9h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      Book a 15-min intro
-    </button>
+      Book a 30-min call
+    </a>
     <p style="margin:10px 0 0;font-size:12px;color:var(--mut);text-align:center">
-      Opens Google Calendar with the meeting pre-filled — pick a time that works for you.
+      Pick any open slot on Rohith's calendar — confirmation lands in your inbox.
     </p>
   </div>
 
@@ -189,13 +172,13 @@
   <div class="row">
     <a class="btn" href="#" id="saveContactBtn">
       <svg viewBox="0 0 24 24" fill="none"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z M17 21v-8H7v8 M7 3v5h8" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-      Save my contact
+      Save Rohith's contact
     </a>
     <a class="btn" href="https://www.linkedin.com/in/rohith-pallerla-13477b98/" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
       LinkedIn
     </a>
-    <a class="btn" href="mailto:rohith@zodhya.com?subject=Met%20at%20event">
+    <a class="btn" href="mailto:rohith@zodhyatech.com?subject=Met%20at%20event">
       <svg viewBox="0 0 24 24" fill="none"><path d="M3 7l9 6 9-6 M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
       Email
     </a>
@@ -217,41 +200,16 @@
     </div>
   </div>
 
-  <!-- SHARE YOUR CARD → Google Sheets -->
+  <!-- SHARE YOUR DETAILS — clickable link (mailto for now; swap to Google Form / Sheets later) -->
   <div class="section">
     <h3>Share your details</h3>
-    <div class="card">
-      <p style="font-size:14px;color:var(--mut);margin:0 0 4px">
-        Drop your info below — Rohith will follow up within 24–48 hours with a tailored next step.
-      </p>
-      <form id="leadForm" autocomplete="on">
-        <label for="f-name">Your name *</label>
-        <input id="f-name" name="name" required placeholder="Jane Doe" />
-
-        <label for="f-company">Company &amp; role</label>
-        <input id="f-company" name="company" placeholder="Acme Corp · Director, Facilities" />
-
-        <label for="f-email">Email *</label>
-        <input id="f-email" name="email" type="email" required placeholder="jane@acme.com" />
-
-        <label for="f-type">You are a…</label>
-        <select id="f-type" name="type">
-          <option value="">Select one</option>
-          <option>Enterprise buyer / facility leader</option>
-          <option>Channel partner (MEP / BMS / ESCO)</option>
-          <option>Investor</option>
-          <option>Founder / peer</option>
-          <option>Media / analyst</option>
-          <option>Other</option>
-        </select>
-
-        <label for="f-note">Quick note</label>
-        <textarea id="f-note" name="note" placeholder="What should we follow up about?"></textarea>
-
-        <button type="submit" class="cta" style="margin-top:14px" id="submitBtn">Send to Rohith</button>
-        <div class="form-msg" id="formMsg"></div>
-      </form>
-    </div>
+    <a class="btn" id="shareBtn" href="mailto:rohith@zodhyatech.com?subject=Met%20at%20event%20%E2%80%94%20share%20my%20details&body=Name%3A%20%0ACompany%20%26%20role%3A%20%0AEmail%3A%20%0AYou%20are%20a%20(enterprise%20%2F%20partner%20%2F%20investor%20%2F%20peer%20%2F%20media)%3A%20%0AQuick%20note%3A%20%0A" style="font-size:15px;padding:15px">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z M22 6l-10 7L2 6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      Send your details to Rohith
+    </a>
+    <p style="margin:10px 0 0;font-size:12px;color:var(--mut);text-align:center">
+      Opens an email pre-filled with the fields Rohith needs to follow up.
+    </p>
   </div>
 
   <div class="foot">
@@ -262,9 +220,7 @@
 
 <script>
 (function(){
-  const cfg = window.ZODHYA_CONFIG;
-
-  // --- Save contact: generate vCard inline as a Blob with correct MIME so
+  // --- Save Rohith's contact: generate vCard inline as a Blob with correct MIME so
   // every phone (iOS Safari, Android Chrome, Samsung Browser) reliably
   // triggers the "Add Contact" prompt. Static .vcf links often fail when
   // the host serves them as text/plain or when opened from file://.
@@ -276,7 +232,7 @@
     "ORG:Zodhya",
     "TITLE:Founder & CEO",
     "TEL;TYPE=CELL,VOICE:+917981580576",
-    "EMAIL:rohith@zodhya.com",
+    "EMAIL:rohith@zodhyatech.com",
     "URL:https://www.zodhyatech.com/",
     "URL:https://www.linkedin.com/in/rohith-pallerla-13477b98/",
     "NOTE:AI for HVAC & building energy optimization.",
@@ -299,62 +255,6 @@
       a.href = url; a.download = "Rohith-Pallerla.vcf";
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 2000);
-    }
-  });
-
-  // --- Booking button: open Google Calendar with the event pre-filled.
-  document.getElementById('bookBtn').addEventListener('click', () => {
-    window.open(cfg.BOOKING_URL, '_blank', 'noopener');
-  });
-
-  // --- Lead form: POST to Google Apps Script web app → Google Sheet.
-  const form = document.getElementById('leadForm');
-  const msg  = document.getElementById('formMsg');
-  const btn  = document.getElementById('submitBtn');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    msg.className = 'form-msg'; msg.textContent = '';
-
-    const data = {
-      name:    form.name.value.trim(),
-      company: form.company.value.trim(),
-      email:   form.email.value.trim(),
-      type:    form.type.value,
-      note:    form.note.value.trim(),
-      source:  'event-qr',
-      ua:      navigator.userAgent,
-      ts:      new Date().toISOString()
-    };
-
-    if (!cfg.SHEETS_URL) {
-      // Graceful fallback while SHEETS_URL is unconfigured: send by email.
-      const body = encodeURIComponent(
-        `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\n` +
-        `Type: ${data.type}\nNote: ${data.note}\nWhen: ${data.ts}`
-      );
-      window.location.href = `mailto:rohith@zodhya.com?subject=Met%20at%20event%20—%20${encodeURIComponent(data.name)}&body=${body}`;
-      return;
-    }
-
-    btn.disabled = true; btn.textContent = 'Sending…';
-    try {
-      // Apps Script Web Apps accept simple POSTs without preflight when
-      // we use text/plain. The script parses JSON from the body.
-      await fetch(cfg.SHEETS_URL, {
-        method: 'POST',
-        mode:   'no-cors',
-        headers:{ 'Content-Type': 'text/plain;charset=utf-8' },
-        body:   JSON.stringify(data)
-      });
-      form.reset();
-      msg.className = 'form-msg ok';
-      msg.textContent = '✓ Thanks — Rohith will be in touch within 24–48 hours.';
-    } catch (err) {
-      msg.className = 'form-msg err';
-      msg.textContent = 'Something went wrong. Email rohith@zodhya.com directly.';
-    } finally {
-      btn.disabled = false; btn.textContent = 'Send to Rohith';
     }
   });
 })();
