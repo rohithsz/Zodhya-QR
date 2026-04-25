@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Rohith Pallerla — Founder & CEO, Zodhya</title>
+<meta name="description" content="Founder of Zodhya — plug-in AI that cuts HVAC and building energy use by 30%. Pilot-ready for US offices, retail, hotels, hospitals, factories, and data centers." />
+
+<!-- ============================================================
+     CONFIG — edit these two lines after one-time setup, then save.
+     1) BOOKING_URL: see README → "Google Calendar booking" section.
+     2) SHEETS_URL : see README → "Google Sheets form" section.
+     ============================================================ -->
+<script>
+  window.ZODHYA_CONFIG = {
+    BOOKING_URL: "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+                 "&text=" + encodeURIComponent("Intro: ↔ Rohith Pallerla (Zodhya)") +
+                 "&details=" + encodeURIComponent(
+                    "15-min intro requested via event QR code.\n\n" +
+                    "Rohith Pallerla — Founder & CEO, Zodhya\n" +
+                    "AI for HVAC & building energy optimization.\n" +
+                    "LinkedIn: https://www.linkedin.com/in/rohith-pallerla-13477b98/\n" +
+                    "Company: https://www.linkedin.com/company/zodhya/"
+                 ) +
+                 "&add=" + encodeURIComponent("rohith@zodhya.com") +
+                 "&dates=" + (() => {
+                    // Default to "tomorrow 10:00–10:15 in your timezone".
+                    // The visitor can drag/edit before saving.
+                    const d = new Date(); d.setDate(d.getDate()+1); d.setHours(10,0,0,0);
+                    const fmt = x => x.toISOString().replace(/[-:]|\.\d{3}/g,'');
+                    const e = new Date(d.getTime()+15*60000);
+                    return fmt(d) + "/" + fmt(e);
+                 })(),
+    SHEETS_URL: ""  // ← paste the Apps Script /exec URL here once deployed.
+  };
+</script>
+
+<style>
+  :root{
+    --bg1:#0a1424; --bg2:#0e1a30;
+    --card:#121e35; --card2:#172545;
+    --ink:#eef3ff; --mut:#9bb0d0;
+    --accent:#34d399; --accent2:#22d3ee; --accent3:#60a5fa;
+    --line:#23335a; --danger:#f87171;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font:16px/1.55 -apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 600px at 50% -10%, rgba(34,211,238,.12), transparent 60%),
+               linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 100%);
+    color:var(--ink); min-height:100vh;
+  }
+  .wrap{max-width:520px;margin:0 auto;padding:32px 20px 56px}
+
+  /* HERO */
+  .hero{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+  .avatar{
+    width:84px;height:84px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;
+    color:#04111c;font-weight:800;font-size:30px;
+    box-shadow:0 8px 24px rgba(34,211,238,.25);
+    border:3px solid rgba(255,255,255,.06);
+    overflow:hidden;flex-shrink:0;
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .who h1{font-size:24px;line-height:1.15;margin:0 0 2px;font-weight:700}
+  .who .role{color:var(--mut);font-size:14px;margin:0}
+  .who .role b{color:var(--accent2)}
+
+  /* PITCH */
+  .pitch{font-size:22px;line-height:1.25;font-weight:700;margin:18px 0 6px;letter-spacing:-.01em}
+  .pitch .hl{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .relevance{color:var(--mut);font-size:15px;margin:0 0 18px}
+
+  /* PROOF GRID */
+  .proof{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 24px}
+  .proof div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:13px;color:var(--mut)}
+  .proof b{display:block;color:var(--ink);font-size:20px;font-weight:800;margin-bottom:2px;letter-spacing:-.01em}
+
+  /* CTA */
+  .cta{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    text-decoration:none;cursor:pointer;width:100%;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#04111c;font-weight:700;font-size:16px;
+    padding:16px;border-radius:14px;border:0;
+    box-shadow:0 8px 24px rgba(45,212,191,.28);
+    transition:transform .15s ease;
+  }
+  .cta:hover{transform:translateY(-1px)}
+  .cta-secondary{
+    background:var(--card);color:var(--ink);
+    border:1px solid var(--line);box-shadow:none;font-weight:600;
+  }
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    text-decoration:none;background:var(--card);color:var(--ink);
+    font-weight:600;font-size:14px;padding:13px;border-radius:12px;
+    border:1px solid var(--line);transition:border-color .15s ease;
+  }
+  .btn:hover{border-color:var(--accent)}
+  .btn svg{width:16px;height:16px;flex-shrink:0}
+
+  /* SECTIONS */
+  .section{margin-top:28px}
+  h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:0 0 12px;font-weight:600}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .card p{margin:0 0 10px;color:#d4ddf0;font-size:15px}
+  .verticals{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .v{background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);color:#a5f3fc;font-size:12px;padding:5px 11px;border-radius:999px}
+
+  ul.fit{padding-left:18px;margin:6px 0 0}
+  ul.fit li{margin:6px 0;color:#d4ddf0}
+  ul.fit b{color:var(--accent2)}
+
+  /* FORM */
+  label{display:block;font-size:12px;color:var(--mut);margin:10px 0 4px;font-weight:600;letter-spacing:.02em}
+  input,textarea,select{
+    width:100%;background:#0d1830;color:var(--ink);
+    border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;font:15px inherit;
+    transition:border-color .15s ease;
+  }
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent2)}
+  textarea{resize:vertical;min-height:70px}
+  .form-msg{margin-top:10px;font-size:14px;padding:10px 12px;border-radius:10px;display:none}
+  .form-msg.ok{display:block;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.4);color:#a7f3d0}
+  .form-msg.err{display:block;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.4);color:#fecaca}
+
+  .foot{margin-top:36px;color:var(--mut);font-size:12px;text-align:center;line-height:1.7}
+  .foot a{color:var(--accent2);text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO: Avatar + Name + Role -->
+  <div class="hero">
+    <div class="avatar" id="avatar">
+      <img src="profile.jpg" alt="Rohith Pallerla" onerror="this.remove();document.getElementById('avatar').textContent='RP'" />
+    </div>
+    <div class="who">
+      <h1>Rohith Pallerla</h1>
+      <p class="role">Founder &amp; CEO · <b>Zodhya</b></p>
+    </div>
+  </div>
+
+  <!-- PITCH (merged Zodhya value-prop) -->
+  <p class="pitch">AI that cuts building energy use by <span class="hl">30%</span>.</p>
+  <p class="relevance">
+    Plug-in AI for HVAC &amp; building energy. Pilot-ready for US offices, retail, hotels, hospitals, factories, and data centers.
+    Looking to meet <b style="color:#cbd5ff">enterprise facility leaders, channel partners, and pilot customers</b>.
+  </p>
+
+  <!-- PROOF -->
+  <div class="proof">
+    <div><b>30%</b>HVAC + energy savings</div>
+    <div><b>Day 1</b>value, no rip-and-replace</div>
+    <div><b>BMS-friendly</b>integrates with existing controls</div>
+    <div><b>6+ verticals</b>deployed</div>
+  </div>
+
+  <!-- WHAT WE DO -->
+  <div class="card">
+    <h3 style="margin-bottom:8px">What Zodhya does</h3>
+    <p>A plug-in AI layer that sits on top of your existing BMS / HVAC controls and continuously optimizes setpoints, schedules, and faults — so buildings consume less energy without comfort trade-offs.</p>
+    <div class="verticals">
+      <span class="v">Offices</span><span class="v">Retail malls</span><span class="v">Hotels</span>
+      <span class="v">Hospitals</span><span class="v">Factories</span><span class="v">Data centers</span>
+    </div>
+  </div>
+
+  <!-- PRIMARY CTA: Book a meeting -->
+  <div class="section">
+    <button type="button" class="cta" id="bookBtn">
+      <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M8 2v4M16 2v4M3 9h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Book a 15-min intro
+    </button>
+    <p style="margin:10px 0 0;font-size:12px;color:var(--mut);text-align:center">
+      Opens Google Calendar with the meeting pre-filled — pick a time that works for you.
+    </p>
+  </div>
+
+  <!-- SECONDARY ACTIONS -->
+  <div class="row">
+    <a class="btn" href="#" id="saveContactBtn">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z M17 21v-8H7v8 M7 3v5h8" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      Save my contact
+    </a>
+    <a class="btn" href="https://www.linkedin.com/in/rohith-pallerla-13477b98/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+      LinkedIn
+    </a>
+    <a class="btn" href="mailto:rohith@zodhya.com?subject=Met%20at%20event">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 7l9 6 9-6 M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      Email
+    </a>
+    <a class="btn" href="https://www.zodhyatech.com/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 21V7l9-4 9 4v14M9 21v-6h6v6 M9 11h.01 M15 11h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Zodhya page
+    </a>
+  </div>
+
+  <!-- FIT -->
+  <div class="section">
+    <h3>Why we should talk</h3>
+    <div class="card">
+      <ul class="fit">
+        <li><b>Enterprise / facility leaders:</b> pilot Zodhya in 1 building, see savings in 30–60 days.</li>
+        <li><b>Channel partners (MEP, BMS, ESCOs):</b> add an AI layer to your existing portfolio.</li>
+        <li><b>Investors / ecosystem:</b> climate-tech with measurable, paid commercial deployments.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SHARE YOUR CARD → Google Sheets -->
+  <div class="section">
+    <h3>Share your details</h3>
+    <div class="card">
+      <p style="font-size:14px;color:var(--mut);margin:0 0 4px">
+        Drop your info below — Rohith will follow up within 24–48 hours with a tailored next step.
+      </p>
+      <form id="leadForm" autocomplete="on">
+        <label for="f-name">Your name *</label>
+        <input id="f-name" name="name" required placeholder="Jane Doe" />
+
+        <label for="f-company">Company &amp; role</label>
+        <input id="f-company" name="company" placeholder="Acme Corp · Director, Facilities" />
+
+        <label for="f-email">Email *</label>
+        <input id="f-email" name="email" type="email" required placeholder="jane@acme.com" />
+
+        <label for="f-type">You are a…</label>
+        <select id="f-type" name="type">
+          <option value="">Select one</option>
+          <option>Enterprise buyer / facility leader</option>
+          <option>Channel partner (MEP / BMS / ESCO)</option>
+          <option>Investor</option>
+          <option>Founder / peer</option>
+          <option>Media / analyst</option>
+          <option>Other</option>
+        </select>
+
+        <label for="f-note">Quick note</label>
+        <textarea id="f-note" name="note" placeholder="What should we follow up about?"></textarea>
+
+        <button type="submit" class="cta" style="margin-top:14px" id="submitBtn">Send to Rohith</button>
+        <div class="form-msg" id="formMsg"></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="foot">
+    Zodhya · AI for energy · Hyderabad, India<br/>
+    <a href="https://www.linkedin.com/company/zodhya/">linkedin.com/company/zodhya</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  const cfg = window.ZODHYA_CONFIG;
+
+  // --- Save contact: generate vCard inline as a Blob with correct MIME so
+  // every phone (iOS Safari, Android Chrome, Samsung Browser) reliably
+  // triggers the "Add Contact" prompt. Static .vcf links often fail when
+  // the host serves them as text/plain or when opened from file://.
+  const VCARD = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    "N:Pallerla;Rohith",
+    "FN:Rohith Pallerla",
+    "ORG:Zodhya",
+    "TITLE:Founder & CEO",
+    "TEL;TYPE=CELL,VOICE:+917981580576",
+    "EMAIL:rohith@zodhya.com",
+    "URL:https://www.zodhyatech.com/",
+    "URL:https://www.linkedin.com/in/rohith-pallerla-13477b98/",
+    "NOTE:AI for HVAC & building energy optimization.",
+    "END:VCARD",
+    ""
+  ].join("\r\n");
+
+  document.getElementById('saveContactBtn').addEventListener('click', (e) => {
+    e.preventDefault();
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOS) {
+      // iOS Safari needs a same-tab navigation to a data: URL with text/vcard
+      // for the "Add Contact" sheet to appear reliably.
+      window.location.href = "data:text/vcard;charset=utf-8," + encodeURIComponent(VCARD);
+    } else {
+      // Android / desktop: Blob download with explicit vcard MIME.
+      const blob = new Blob([VCARD], { type: "text/vcard;charset=utf-8" });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement("a");
+      a.href = url; a.download = "Rohith-Pallerla.vcf";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+    }
+  });
+
+  // --- Booking button: open Google Calendar with the event pre-filled.
+  document.getElementById('bookBtn').addEventListener('click', () => {
+    window.open(cfg.BOOKING_URL, '_blank', 'noopener');
+  });
+
+  // --- Lead form: POST to Google Apps Script web app → Google Sheet.
+  const form = document.getElementById('leadForm');
+  const msg  = document.getElementById('formMsg');
+  const btn  = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.className = 'form-msg'; msg.textContent = '';
+
+    const data = {
+      name:    form.name.value.trim(),
+      company: form.company.value.trim(),
+      email:   form.email.value.trim(),
+      type:    form.type.value,
+      note:    form.note.value.trim(),
+      source:  'event-qr',
+      ua:      navigator.userAgent,
+      ts:      new Date().toISOString()
+    };
+
+    if (!cfg.SHEETS_URL) {
+      // Graceful fallback while SHEETS_URL is unconfigured: send by email.
+      const body = encodeURIComponent(
+        `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\n` +
+        `Type: ${data.type}\nNote: ${data.note}\nWhen: ${data.ts}`
+      );
+      window.location.href = `mailto:rohith@zodhya.com?subject=Met%20at%20event%20—%20${encodeURIComponent(data.name)}&body=${body}`;
+      return;
+    }
+
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      // Apps Script Web Apps accept simple POSTs without preflight when
+      // we use text/plain. The script parses JSON from the body.
+      await fetch(cfg.SHEETS_URL, {
+        method: 'POST',
+        mode:   'no-cors',
+        headers:{ 'Content-Type': 'text/plain;charset=utf-8' },
+        body:   JSON.stringify(data)
+      });
+      form.reset();
+      msg.className = 'form-msg ok';
+      msg.textContent = '✓ Thanks — Rohith will be in touch within 24–48 hours.';
+    } catch (err) {
+      msg.className = 'form-msg err';
+      msg.textContent = 'Something went wrong. Email rohith@zodhya.com directly.';
+    } finally {
+      btn.disabled = false; btn.textContent = 'Send to Rohith';
+    }
+  });
+})();
+</script>
+</body>
+</html>

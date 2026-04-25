@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Test QR — Rohith's Event Page</title>
+<style>
+  :root{--bg:#0a1424;--card:#121e35;--ink:#eef3ff;--mut:#9bb0d0;--accent:#34d399;--accent2:#22d3ee;--line:#23335a}
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.55 -apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+       background:radial-gradient(900px 500px at 50% -10%, rgba(34,211,238,.12), transparent 60%),
+                  linear-gradient(180deg,#0a1424 0%,#0e1a30 100%);color:var(--ink);min-height:100vh}
+  .wrap{max-width:680px;margin:0 auto;padding:40px 20px}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:-.01em}
+  .sub{color:var(--mut);margin:0 0 24px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+  label{display:block;font-size:12px;color:var(--mut);margin:0 0 6px;letter-spacing:.04em;font-weight:600;text-transform:uppercase}
+  input{width:100%;background:#0d1830;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font:15px inherit}
+  input:focus{outline:none;border-color:var(--accent2)}
+  .qr-host{display:flex;justify-content:center;align-items:center;background:#fff;border-radius:14px;padding:24px;margin-top:16px;min-height:300px}
+  #qr canvas, #qr img{display:block;max-width:100%;height:auto}
+  .url{display:block;text-align:center;color:var(--accent2);word-break:break-all;font-family:ui-monospace,Consolas,monospace;font-size:13px;margin-top:8px}
+  h3{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:0 0 10px;font-weight:600}
+  ol{padding-left:20px;margin:8px 0}
+  ol li{margin:8px 0;color:#d4ddf0}
+  code{background:#0d1830;border:1px solid var(--line);padding:2px 7px;border-radius:6px;font-family:ui-monospace,Consolas,monospace;font-size:13px;color:var(--accent)}
+  .row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+  .chip{background:#0d1830;border:1px solid var(--line);color:var(--ink);font-size:12px;padding:6px 12px;border-radius:999px;cursor:pointer;font-family:inherit}
+  .chip:hover{border-color:var(--accent2);color:var(--accent2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🧪 QR Code Tester</h1>
+  <p class="sub">Paste any URL and a QR will render below. Scan it with your phone to test.</p>
+
+  <div class="card">
+    <label for="urlInput">URL to encode</label>
+    <input id="urlInput" type="text" />
+    <div class="row">
+      <button class="chip" data-preset="auto">📍 This folder's rohith.html</button>
+      <button class="chip" data-preset="https://www.linkedin.com/in/rohith-pallerla-13477b98/">🔗 LinkedIn</button>
+      <button class="chip" data-preset="https://www.zodhyatech.com/">🌐 zodhyatech.com</button>
+    </div>
+
+    <div class="qr-host"><div id="qr"></div></div>
+    <a class="url" id="urlLabel" target="_blank" rel="noopener"></a>
+  </div>
+
+  <div class="card">
+    <h3>Make it scannable from your phone</h3>
+    <p style="margin:0 0 8px;color:#d4ddf0">A QR pointing to a <code>file://</code> path on your laptop won't open on a phone. Two ways to make it work:</p>
+    <p style="margin:14px 0 6px;color:var(--accent2);font-weight:600">Option A — GitHub Pages (recommended)</p>
+    <ol>
+      <li>Push this folder to GitHub and enable Pages (see repo README).</li>
+      <li>Paste your live URL above (e.g. <code>https://you.github.io/zodhya-event-kit/rohith.html</code>) and scan.</li>
+    </ol>
+    <p style="margin:14px 0 6px;color:var(--accent2);font-weight:600">Option B — Local Wi-Fi server</p>
+    <ol>
+      <li>In PowerShell, from this folder: <code>python -m http.server 8000</code></li>
+      <li>Find your laptop's Wi-Fi IP: <code>(Get-NetIPAddress -AddressFamily IPv4 | ? InterfaceAlias -match 'Wi-Fi').IPAddress</code></li>
+      <li>Type <code>http://&lt;that-ip&gt;:8000/rohith.html</code> above. Phone must be on the same Wi-Fi.</li>
+    </ol>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script>
+  const input = document.getElementById('urlInput');
+  const qrEl  = document.getElementById('qr');
+  const lbl   = document.getElementById('urlLabel');
+  const def   = new URL('rohith.html', location.href).href;
+  input.value = def;
+  function render(url){
+    qrEl.innerHTML = '';
+    if (!url) { lbl.textContent=''; return; }
+    QRCode.toCanvas(url, { width: 320, margin: 2, errorCorrectionLevel: 'M',
+      color: { dark: '#0b1220', light: '#ffffff' } }, (err, c) => {
+      if (err) { qrEl.textContent = String(err); return; }
+      qrEl.appendChild(c);
+    });
+    lbl.textContent = url; lbl.href = url;
+  }
+  input.addEventListener('input', () => render(input.value.trim()));
+  document.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => {
+    input.value = (b.dataset.preset === 'auto') ? def : b.dataset.preset;
+    render(input.value);
+  }));
+  render(input.value);
+</script>
+</body>
+</html>
