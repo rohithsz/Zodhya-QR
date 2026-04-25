@@ -14,7 +14,7 @@ OUT = Path(__file__).parent
 
 # Replace with the real URL once rohith.html is hosted (Netlify, GitHub Pages, etc.)
 # Falling back to LinkedIn so the QR is still useful before hosting.
-LANDING_URL = "https://www.linkedin.com/in/rohith-pallerla-13477b98/"
+LANDING_URL = "https://likhitha-pallerla.github.io/zodhya-event-kit/rohith.html"
 
 def make_qr(data: str, filename: str):
     qr = qrcode.QRCode(version=None, error_correction=ERROR_CORRECT_M, box_size=14, border=4)

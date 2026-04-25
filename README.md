@@ -3,7 +3,7 @@
 > **One QR · one landing page · zero friction.**
 > Built for US networking events as a founder — opens to a 15-second pitch, a one-tap contact save, and a one-tap meeting booking.
 
-🔗 **Live page:** _replace this with your GitHub Pages URL after deploy_
+🔗 **Live page:** https://likhitha-pallerla.github.io/zodhya-event-kit/rohith.html
 📱 **QR:** [`rohith-qr.png`](rohith-qr.png) — scan to open the live page on a phone
 
 ---
