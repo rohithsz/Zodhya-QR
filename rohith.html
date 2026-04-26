@@ -4,122 +4,156 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Rohith Pallerla — Founder & CEO, Zodhya</title>
-<meta name="description" content="Founder of Zodhya — plug-in AI that cuts HVAC and building energy use by 30%. Pilot-ready for US offices, retail, hotels, hospitals, factories, and data centers." />
+<meta name="description" content="Founder of Zodhya — plug-in intelligence that orchestrates, operates and optimises energy across buildings, grids, and distributed sources." />
+<link rel="icon" type="image/png" href="zodhya-logo.png" />
 
-<!-- ============================================================
-     CONFIG — edit these two lines after one-time setup, then save.
-     1) BOOKING_URL: see README → "Google Calendar booking" section.
-     2) SHEETS_URL : see README → "Google Sheets form" section.
-     ============================================================ -->
-<script>
-  window.ZODHYA_CONFIG = {
-    BOOKING_URL: "https://cal.com/rohithsz/30min",
-    SHEETS_URL: ""  // ← paste the Apps Script /exec URL here once deployed.
-  };
-</script>
+<!-- Brand fonts: Rubik (headings) + Aleo (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Aleo:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
   :root{
-    --bg1:#0a1424; --bg2:#0e1a30;
-    --card:#121e35; --card2:#172545;
-    --ink:#eef3ff; --mut:#9bb0d0;
-    --accent:#34d399; --accent2:#22d3ee; --accent3:#60a5fa;
-    --line:#23335a; --danger:#f87171;
+    --orange:#f0842c;
+    --blue:#1b617d;
+    --blue-dark:#144c63;
+    --grey:#535353;
+    --bg:#f8f7f4;
+    --bg-soft:#ffffff;
+    --line:#e5e1da;
+    --ink:#1f2a33;
+    --mut:#6b7480;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{
-    font:16px/1.55 -apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
-    background:radial-gradient(1200px 600px at 50% -10%, rgba(34,211,238,.12), transparent 60%),
-               linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 100%);
-    color:var(--ink); min-height:100vh;
+    font-family:'Aleo','Georgia',serif;
+    font-size:16px;line-height:1.6;color:var(--ink);
+    background:
+      radial-gradient(900px 500px at 100% -10%, rgba(240,132,44,.08), transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, rgba(27,97,125,.08), transparent 60%),
+      var(--bg);
+    min-height:100vh;
   }
-  .wrap{max-width:520px;margin:0 auto;padding:32px 20px 56px}
+  h1,h2,h3,h4{font-family:'Rubik',sans-serif;color:var(--blue);margin:0;letter-spacing:-.005em}
 
-  /* HERO */
-  .hero{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+  .wrap{max-width:540px;margin:0 auto;padding:24px 20px 56px}
+
+  /* TOP BAR with Zodhya logo */
+  .topbar{display:flex;justify-content:center;align-items:center;margin-bottom:24px}
+  .topbar img{height:38px;width:auto;display:block}
+
+  /* HERO: avatar + name */
+  .hero{display:flex;align-items:center;gap:18px;margin-bottom:22px}
   .avatar{
-    width:84px;height:84px;border-radius:50%;
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    display:flex;align-items:center;justify-content:center;
-    color:#04111c;font-weight:800;font-size:30px;
-    box-shadow:0 8px 24px rgba(34,211,238,.25);
-    border:3px solid rgba(255,255,255,.06);
+    width:96px;height:96px;border-radius:50%;
     overflow:hidden;flex-shrink:0;
+    background:linear-gradient(135deg,var(--blue),var(--orange));
+    border:3px solid #fff;
+    box-shadow:0 8px 24px rgba(27,97,125,.25);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-family:'Rubik',sans-serif;font-weight:800;font-size:32px;
   }
   .avatar img{width:100%;height:100%;object-fit:cover;display:block}
-  .who h1{font-size:24px;line-height:1.15;margin:0 0 2px;font-weight:700}
-  .who .role{color:var(--mut);font-size:14px;margin:0}
-  .who .role b{color:var(--accent2)}
+  .who h1{font-size:26px;line-height:1.15;font-weight:700;margin-bottom:4px}
+  .who .role{color:var(--grey);font-size:15px;margin:0;font-family:'Aleo',serif}
+  .who .role b{color:var(--orange);font-weight:600}
 
-  /* PITCH */
-  .pitch{font-size:22px;line-height:1.25;font-weight:700;margin:18px 0 6px;letter-spacing:-.01em}
-  .pitch .hl{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .relevance{color:var(--mut);font-size:15px;margin:0 0 18px}
+  /* BIO */
+  .bio{
+    font-size:15.5px;line-height:1.65;color:var(--grey);
+    margin:18px 0 22px;
+  }
+
+  /* ZODHYA INTRO */
+  .z-intro{
+    background:var(--bg-soft);
+    border:1px solid var(--line);
+    border-left:4px solid var(--orange);
+    border-radius:12px;
+    padding:16px 18px;margin:18px 0 22px;
+  }
+  .z-intro .label{
+    font-family:'Rubik',sans-serif;font-weight:600;font-size:13px;
+    text-transform:uppercase;letter-spacing:.08em;color:var(--blue);
+    margin-bottom:6px;
+  }
+  .z-intro p{margin:0;color:var(--ink);font-size:15.5px;line-height:1.6}
 
   /* PROOF GRID */
-  .proof{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 24px}
-  .proof div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:13px;color:var(--mut)}
-  .proof b{display:block;color:var(--ink);font-size:20px;font-weight:800;margin-bottom:2px;letter-spacing:-.01em}
+  .proof{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0 22px}
+  .proof .box{
+    background:var(--bg-soft);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 16px;
+  }
+  .proof .box b{
+    display:block;font-family:'Rubik',sans-serif;font-weight:700;
+    color:var(--orange);font-size:18px;letter-spacing:-.01em;margin-bottom:4px;
+  }
+  .proof .box span{color:var(--grey);font-size:14px;line-height:1.45}
 
-  /* CTA */
+  /* WEBSITE LINK */
+  .website{
+    display:flex;align-items:center;gap:10px;
+    background:var(--bg-soft);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:13px 16px;text-decoration:none;color:var(--blue);
+    font-family:'Rubik',sans-serif;font-weight:500;font-size:15px;
+    margin:0 0 24px;transition:all .15s ease;
+  }
+  .website:hover{border-color:var(--orange);color:var(--orange)}
+  .website svg{width:20px;height:20px;flex-shrink:0;color:var(--orange)}
+  .website .url{color:var(--grey);font-family:'Aleo',serif;font-weight:400;font-size:13px;margin-left:auto}
+
+  /* PRIMARY CTA */
   .cta{
     display:flex;align-items:center;justify-content:center;gap:10px;
     text-decoration:none;cursor:pointer;width:100%;
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    color:#04111c;font-weight:700;font-size:16px;
-    padding:16px;border-radius:14px;border:0;
-    box-shadow:0 8px 24px rgba(45,212,191,.28);
-    transition:transform .15s ease;
+    background:linear-gradient(135deg,var(--orange) 0%, #e07020 100%);
+    color:#fff;font-family:'Rubik',sans-serif;font-weight:600;font-size:16px;
+    padding:16px;border-radius:12px;border:0;
+    box-shadow:0 6px 18px rgba(240,132,44,.35);
+    transition:all .15s ease;
   }
-  .cta:hover{transform:translateY(-1px)}
-  .cta-secondary{
-    background:var(--card);color:var(--ink);
-    border:1px solid var(--line);box-shadow:none;font-weight:600;
-  }
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .cta:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(240,132,44,.45)}
+  .cta svg{width:18px;height:18px}
+  .cta-hint{margin:10px 0 0;font-size:12.5px;color:var(--mut);text-align:center}
+
+  /* SECONDARY ACTIONS */
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
   .btn{
     display:flex;align-items:center;justify-content:center;gap:8px;
-    text-decoration:none;background:var(--card);color:var(--ink);
-    font-weight:600;font-size:14px;padding:13px;border-radius:12px;
-    border:1px solid var(--line);transition:border-color .15s ease;
+    text-decoration:none;background:var(--bg-soft);color:var(--blue);
+    font-family:'Rubik',sans-serif;font-weight:500;font-size:14px;
+    padding:14px;border-radius:12px;border:1px solid var(--line);
+    transition:all .15s ease;cursor:pointer;
   }
-  .btn:hover{border-color:var(--accent)}
-  .btn svg{width:16px;height:16px;flex-shrink:0}
+  .btn:hover{border-color:var(--blue);color:var(--blue-dark);background:#fff}
+  .btn svg{width:16px;height:16px;flex-shrink:0;color:var(--orange)}
 
-  /* SECTIONS */
-  .section{margin-top:28px}
-  h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:0 0 12px;font-weight:600}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
-  .card p{margin:0 0 10px;color:#d4ddf0;font-size:15px}
-  .verticals{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-  .v{background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);color:#a5f3fc;font-size:12px;padding:5px 11px;border-radius:999px}
-
-  ul.fit{padding-left:18px;margin:6px 0 0}
-  ul.fit li{margin:6px 0;color:#d4ddf0}
-  ul.fit b{color:var(--accent2)}
-
-  /* FORM */
-  label{display:block;font-size:12px;color:var(--mut);margin:10px 0 4px;font-weight:600;letter-spacing:.02em}
-  input,textarea,select{
-    width:100%;background:#0d1830;color:var(--ink);
-    border:1px solid var(--line);border-radius:10px;
-    padding:12px 14px;font:15px inherit;
-    transition:border-color .15s ease;
+  /* FOOTER */
+  .foot{
+    margin-top:36px;padding-top:20px;
+    border-top:1px solid var(--line);
+    text-align:center;color:var(--mut);font-size:12.5px;line-height:1.7;
   }
-  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent2)}
-  textarea{resize:vertical;min-height:70px}
-  .form-msg{margin-top:10px;font-size:14px;padding:10px 12px;border-radius:10px;display:none}
-  .form-msg.ok{display:block;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.4);color:#a7f3d0}
-  .form-msg.err{display:block;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.4);color:#fecaca}
-
-  .foot{margin-top:36px;color:var(--mut);font-size:12px;text-align:center;line-height:1.7}
-  .foot a{color:var(--accent2);text-decoration:none}
-  .foot a:hover{text-decoration:underline}
+  .foot img{height:22px;display:block;margin:0 auto 8px;opacity:.85}
+  .foot a{color:var(--blue);text-decoration:none;font-weight:600}
+  .foot a:hover{color:var(--orange)}
 </style>
 </head>
 <body>
 <div class="wrap">
+
+  <!-- TOPBAR LOGO -->
+  <div class="topbar">
+    <a href="https://www.zodhyatech.com/" target="_blank" rel="noopener" aria-label="Zodhya">
+      <img src="zodhya-logo.png" alt="Zodhya" />
+    </a>
+  </div>
 
   <!-- HERO: Avatar + Name + Role -->
   <div class="hero">
@@ -132,98 +166,75 @@
     </div>
   </div>
 
-  <!-- PITCH (merged Zodhya value-prop) -->
-  <p class="pitch">AI that cuts building energy use by <span class="hl">30%</span>.</p>
-  <p class="relevance">
-    Plug-in AI for HVAC &amp; building energy. Pilot-ready for US offices, retail, hotels, hospitals, factories, and data centers.
-    Looking to meet <b style="color:#cbd5ff">enterprise facility leaders, channel partners, and pilot customers</b>.
+  <!-- BIO -->
+  <p class="bio">
+    A decade of experience building intelligent, adaptive systems using IoT, AI, and automation — with a deep interest in solving energy challenges across buildings, grids, and emerging environments like space.
   </p>
+
+  <!-- ZODHYA INTRO -->
+  <div class="z-intro">
+    <div class="label">Today, here's what my startup Zodhya does</div>
+    <p>Plug-in intelligence that orchestrates, operates, and optimises energy in real-time across any asset class — buildings, grids, or distributed sources.</p>
+  </div>
 
   <!-- PROOF -->
   <div class="proof">
-    <div><b>30%</b>HVAC + energy savings</div>
-    <div><b>Day 1</b>value, no rip-and-replace</div>
-    <div><b>BMS-friendly</b>integrates with existing controls</div>
-    <div><b>6+ verticals</b>deployed</div>
+    <div class="box"><b>30%</b><span>energy savings &amp; peak demand reduction</span></div>
+    <div class="box"><b>Day 1</b><span>performance without any delays</span></div>
+    <div class="box"><b>Interoperable</b><span>integrates with any system, BMS or non-BMS</span></div>
+    <div class="box"><b>Autonomous</b><span>not just analysis — control that's quick &amp; reliable</span></div>
   </div>
 
-  <!-- WHAT WE DO -->
-  <div class="card">
-    <h3 style="margin-bottom:8px">What Zodhya does</h3>
-    <p>A plug-in AI layer that sits on top of your existing BMS / HVAC controls and continuously optimizes setpoints, schedules, and faults — so buildings consume less energy without comfort trade-offs.</p>
-    <div class="verticals">
-      <span class="v">Offices</span><span class="v">Retail malls</span><span class="v">Hotels</span>
-      <span class="v">Hospitals</span><span class="v">Factories</span><span class="v">Data centers</span>
-    </div>
-  </div>
+  <!-- WEBSITE LINK -->
+  <a class="website" href="https://www.zodhyatech.com/" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </svg>
+    Visit Zodhya
+    <span class="url">zodhyatech.com</span>
+  </a>
 
-  <!-- PRIMARY CTA: Book a meeting -->
-  <div class="section">
-    <a class="cta" id="bookBtn" href="https://cal.com/rohithsz/30min" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M8 2v4M16 2v4M3 9h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      Book a 30-min call
-    </a>
-    <p style="margin:10px 0 0;font-size:12px;color:var(--mut);text-align:center">
-      Pick any open slot on Rohith's calendar — confirmation lands in your inbox.
-    </p>
-  </div>
+  <!-- PRIMARY CTA -->
+  <a class="cta" href="https://cal.com/rohithsz/30min" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2"/>
+      <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+    Book a quick catchup call
+  </a>
+  <p class="cta-hint">Pick any open slot on Rohith's calendar — confirmation lands in your inbox.</p>
 
   <!-- SECONDARY ACTIONS -->
   <div class="row">
     <a class="btn" href="#" id="saveContactBtn">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z M17 21v-8H7v8 M7 3v5h8" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
       Save Rohith's contact
     </a>
-    <a class="btn" href="https://www.linkedin.com/in/rohith-pallerla-13477b98/" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-      LinkedIn
-    </a>
-    <a class="btn" href="mailto:rohith@zodhyatech.com?subject=Met%20at%20event">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M3 7l9 6 9-6 M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-      Email
-    </a>
-    <a class="btn" href="https://www.zodhyatech.com/" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M3 21V7l9-4 9 4v14M9 21v-6h6v6 M9 11h.01 M15 11h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Zodhya page
+    <a class="btn" id="shareBtn" href="mailto:rohith@zodhyatech.com?subject=Met%20at%20event%20%E2%80%94%20share%20my%20details&body=Name%3A%20%0ACompany%20%26%20role%3A%20%0AEmail%3A%20%0AYou%20are%20a%20(enterprise%20%2F%20partner%20%2F%20investor%20%2F%20peer%20%2F%20media)%3A%20%0AQuick%20note%3A%20%0A">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <path d="M22 6l-10 7L2 6"/>
+      </svg>
+      Share your details
     </a>
   </div>
 
-  <!-- FIT -->
-  <div class="section">
-    <h3>Why we should talk</h3>
-    <div class="card">
-      <ul class="fit">
-        <li><b>Enterprise / facility leaders:</b> pilot Zodhya in 1 building, see savings in 30–60 days.</li>
-        <li><b>Channel partners (MEP, BMS, ESCOs):</b> add an AI layer to your existing portfolio.</li>
-        <li><b>Investors / ecosystem:</b> climate-tech with measurable, paid commercial deployments.</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- SHARE YOUR DETAILS — clickable link (mailto for now; swap to Google Form / Sheets later) -->
-  <div class="section">
-    <h3>Share your details</h3>
-    <a class="btn" id="shareBtn" href="mailto:rohith@zodhyatech.com?subject=Met%20at%20event%20%E2%80%94%20share%20my%20details&body=Name%3A%20%0ACompany%20%26%20role%3A%20%0AEmail%3A%20%0AYou%20are%20a%20(enterprise%20%2F%20partner%20%2F%20investor%20%2F%20peer%20%2F%20media)%3A%20%0AQuick%20note%3A%20%0A" style="font-size:15px;padding:15px">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z M22 6l-10 7L2 6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-      Send your details to Rohith
-    </a>
-    <p style="margin:10px 0 0;font-size:12px;color:var(--mut);text-align:center">
-      Opens an email pre-filled with the fields Rohith needs to follow up.
-    </p>
-  </div>
-
+  <!-- FOOTER -->
   <div class="foot">
-    Zodhya · AI for energy · Hyderabad, India<br/>
-    <a href="https://www.linkedin.com/company/zodhya/">linkedin.com/company/zodhya</a>
+    <img src="zodhya-logo.png" alt="Zodhya" />
+    AI for energy · Hyderabad, India<br/>
+    <a href="https://www.zodhyatech.com/">zodhyatech.com</a>
   </div>
 </div>
 
 <script>
 (function(){
-  // --- Save Rohith's contact: generate vCard inline as a Blob with correct MIME so
-  // every phone (iOS Safari, Android Chrome, Samsung Browser) reliably
-  // triggers the "Add Contact" prompt. Static .vcf links often fail when
-  // the host serves them as text/plain or when opened from file://.
+  // --- Save Rohith's contact: generate vCard inline as a Blob (or data: URL on iOS)
+  // so every phone reliably triggers the "Add Contact" prompt.
   const VCARD = [
     "BEGIN:VCARD",
     "VERSION:3.0",
@@ -244,11 +255,8 @@
     e.preventDefault();
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     if (isIOS) {
-      // iOS Safari needs a same-tab navigation to a data: URL with text/vcard
-      // for the "Add Contact" sheet to appear reliably.
       window.location.href = "data:text/vcard;charset=utf-8," + encodeURIComponent(VCARD);
     } else {
-      // Android / desktop: Blob download with explicit vcard MIME.
       const blob = new Blob([VCARD], { type: "text/vcard;charset=utf-8" });
       const url  = URL.createObjectURL(blob);
       const a    = document.createElement("a");
