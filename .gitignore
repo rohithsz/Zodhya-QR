@@ -22,6 +22,10 @@ desktop.ini
 *.local.html
 *.local.js
 
+
 # Build / temp
 *.log
 *.tmp
+
+# Local-only docs (not for repo)
+Misc Docs/reopen-withcopilot.md
