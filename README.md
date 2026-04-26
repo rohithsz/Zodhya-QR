@@ -1,7 +1,7 @@
 # Zodhya — Rohith's Event Kit
 
 > **One QR · one landing page · zero friction.**
-> Built for US networking events as a founder — opens to a 15-second pitch, a one-tap contact save, and a one-tap meeting booking.
+> Built for networking events as a founder — opens to a 15-second pitch, a one-tap contact save, and a one-tap meeting booking.
 
 🔗 **Live page:** https://rohithsz.github.io/Zodhya-QR/rohith.html
 📱 **QR:** [`rohith-qr.png`](rohith-qr.png) — scan to open the live page on a phone
