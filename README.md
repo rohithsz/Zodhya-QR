@@ -1,4 +1,4 @@
-# Zodhya — Rohith's Event Kit
+# Zodhya — Rohith's QR 
 
 > **One QR · one landing page · zero friction.**
 > Built for networking events as a founder — opens to a 15-second pitch, a one-tap contact save, and a one-tap meeting booking.
